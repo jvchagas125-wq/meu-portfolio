@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfólio IT</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=DM+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="css/styles.css">
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-wrapper stripe-bg" id="appWrapper" style="background-color: #0a0f1a;"><!-- Navigation -->
+   <nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: rgba(10,15,26,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,255,136,0.1);">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"><span class="mono font-bold text-lg" id="navLogo" style="color: #00ff88;">~/portfolio</span>
+     <div class="hidden md:flex gap-8"><a href="#about" class="nav-link text-sm tracking-wide" style="color: #8892a4;">Sobre</a> <a href="#experience" class="nav-link text-sm tracking-wide" style="color: #8892a4;">Experiência</a> <a href="#skills" class="nav-link text-sm tracking-wide" style="color: #8892a4;">Habilidades</a> <a href="#projects" class="nav-link text-sm tracking-wide" style="color: #8892a4;">Projetos</a> <a href="#results" class="nav-link text-sm tracking-wide" style="color: #8892a4;">Resultados</a> <a href="#contact" class="nav-link text-sm tracking-wide" style="color: #8892a4;">Contato</a>
+     </div><button id="mobileMenuBtn" class="md:hidden" style="color: #8892a4;" aria-label="Menu"> <i data-lucide="menu" style="width:24px;height:24px;"></i> </button>
+    </div><!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden md:hidden px-6 pb-4 flex flex-col gap-3"><a href="#about" class="text-sm" style="color: #8892a4;">Sobre</a> <a href="#experience" class="text-sm" style="color: #8892a4;">Experiência</a> <a href="#skills" class="text-sm" style="color: #8892a4;">Habilidades</a> <a href="#projects" class="text-sm" style="color: #8892a4;">Projetos</a> <a href="#results" class="text-sm" style="color: #8892a4;">Resultados</a> <a href="#contact" class="text-sm" style="color: #8892a4;">Contato</a>
+    </div>
+   </nav><!-- Hero -->
+   <header class="relative flex items-center justify-center" style="min-height: 100%; padding: 120px 24px 80px;">
+    <div class="max-w-4xl mx-auto text-center"><!-- Terminal-style greeting -->
+     <div class="mono text-sm mb-6 tracking-wider reveal" style="color: #00ff88; opacity: 0.7;"><span style="color: #8892a4;">$</span> whoami
+     </div>
+     <h1 id="heroName" class="text-5xl md:text-7xl font-bold mb-4 reveal" style="color: #e8ecf1; letter-spacing: -2px;">João Victor</h1>
+     <p id="heroTitle" class="mono text-xl md:text-2xl mb-3 reveal cursor-blink" style="color: #00ff88;">Operador de Help Desk Jr</p>
+     <p id="heroSubtitle" class="text-lg reveal" style="color: #8892a4;">Minsait | Análise e Desenvolvimento de Sistemas</p>
+     <div class="flex gap-4 justify-center mt-10 reveal"><a href="#about" class="mono text-sm px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105" style="background: #00ff88; color: #0a0f1a;"> Conhecer mais → </a> <a href="#experience" class="mono text-sm px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105" style="border: 1px solid #1e2a3a; color: #8892a4; background: rgba(30,42,58,0.3);"> Experiência </a>
+     </div><!-- Scroll indicator -->
+     <div class="mt-16 reveal" style="color: #8892a4; opacity: 0.4;"><i data-lucide="chevron-down" style="width:28px;height:28px;margin:0 auto;" class="animate-bounce"></i>
+     </div>
+    </div>
+   </header><!-- About -->
+   <section id="about" class="py-24 px-6 reveal">
+    <div class="max-w-4xl mx-auto">
+     <div class="flex items-center gap-3 mb-10"><span class="mono text-sm" style="color: #00ff88;">01.</span>
+      <h2 id="aboutTitle" class="text-3xl font-bold" style="color: #e8ecf1;">Sobre Mim</h2>
+      <div class="flex-1 h-px ml-4" style="background: #1e2a3a;"></div>
+     </div>
+     <div class="glow-card rounded-2xl p-8 md:p-10" style="background: #0f1624; border: 1px solid #1e2a3a;">
+      <div class="flex items-start gap-3 mb-4"><i data-lucide="terminal" style="width:20px;height:20px;color:#00ff88;flex-shrink:0;margin-top:4px;"></i>
+       <p class="text-base leading-relaxed" style="color: #b0b8c8;">Profissional de TI com atuação como <strong style="color: #e8ecf1;">Operador de Help Desk Jr</strong> na <strong style="color: #00ff88;">Minsait</strong> desde janeiro de 2023, com experiência em atendimento multicanal (voz receptivo, chat, WEB e IPRO). Possuo vivência no suporte técnico ao usuário, atuando na análise, registro e resolução de incidentes, sempre com foco na qualidade do atendimento e cumprimento de SLA.</p>
+      </div>
+      <div class="flex items-start gap-3 mb-4"><i data-lucide="graduation-cap" style="width:20px;height:20px;color:#00ff88;flex-shrink:0;margin-top:4px;"></i>
+       <p class="text-base leading-relaxed" style="color: #b0b8c8;">Atualmente, estou cursando ensino superior em <strong style="color: #e8ecf1;">Análise e Desenvolvimento de Sistemas</strong>, buscando aprimorar meus conhecimentos técnicos e evoluir profissionalmente na área de tecnologia.</p>
+      </div>
+      <div class="flex items-start gap-3"><i data-lucide="zap" style="width:20px;height:20px;color:#00ff88;flex-shrink:0;margin-top:4px;"></i>
+       <p class="text-base leading-relaxed" style="color: #b0b8c8;">Tenho facilidade de comunicação, organização e adaptação a diferentes ferramentas e ambientes, buscando sempre oferecer soluções eficientes e uma boa experiência ao usuário.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Experience -->
+   <section id="experience" class="py-24 px-6 reveal">
+    <div class="max-w-4xl mx-auto">
+     <div class="flex items-center gap-3 mb-10"><span class="mono text-sm" style="color: #00ff88;">02.</span>
+      <h2 id="experienceTitle" class="text-3xl font-bold" style="color: #e8ecf1;">Experiência Profissional</h2>
+      <div class="flex-1 h-px ml-4" style="background: #1e2a3a;"></div>
+     </div>
+     <div class="glow-card rounded-2xl p-8 md:p-10" style="background: #0f1624; border: 1px solid #1e2a3a;">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+       <div>
+        <h3 class="text-xl font-bold" style="color: #e8ecf1;">Operador de Help Desk Jr</h3><span class="mono text-sm" style="color: #00ff88;">Minsait</span>
+       </div><span class="mono text-sm mt-2 md:mt-0" style="color: #8892a4;">Jan 2023 — Presente</span>
+      </div>
+      <ul class="space-y-3">
+       <li class="flex items-start gap-3"><span style="color: #00ff88;">▹</span><span style="color: #b0b8c8;">Atendimento a usuários por múltiplos canais: voz, chat, WEB e IPRO</span></li>
+       <li class="flex items-start gap-3"><span style="color: #00ff88;">▹</span><span style="color: #b0b8c8;">Registro, categorização e acompanhamento de chamados</span></li>
+       <li class="flex items-start gap-3"><span style="color: #00ff88;">▹</span><span style="color: #b0b8c8;">Suporte técnico de primeiro nível (N1)</span></li>
+       <li class="flex items-start gap-3"><span style="color: #00ff88;">▹</span><span style="color: #b0b8c8;">Diagnóstico e resolução de incidentes: acesso a sistemas, login/senha, configuração de softwares</span></li>
+       <li class="flex items-start gap-3"><span style="color: #00ff88;">▹</span><span style="color: #b0b8c8;">Suporte a ambiente Windows e escalonamento quando necessário</span></li>
+       <li class="flex items-start gap-3"><span style="color: #00ff88;">▹</span><span style="color: #b0b8c8;">Atuação com foco no cumprimento de SLA e qualidade no atendimento</span></li>
+      </ul>
+     </div>
+    </div>
+   </section><!-- Skills -->
+   <section id="skills" class="py-24 px-6 reveal">
+    <div class="max-w-4xl mx-auto">
+     <div class="flex items-center gap-3 mb-10"><span class="mono text-sm" style="color: #00ff88;">03.</span>
+      <h2 id="skillsTitle" class="text-3xl font-bold" style="color: #e8ecf1;">Habilidades Técnicas</h2>
+      <div class="flex-1 h-px ml-4" style="background: #1e2a3a;"></div>
+     </div>
+     <div class="grid md:grid-cols-3 gap-6 stagger" id="skillsGrid"><!-- Skills rendered via JS -->
+     </div>
+    </div>
+   </section><!-- Projects -->
+   <section id="projects" class="py-24 px-6 reveal">
+    <div class="max-w-4xl mx-auto">
+     <div class="flex items-center gap-3 mb-10"><span class="mono text-sm" style="color: #00ff88;">04.</span>
+      <h2 id="projectsTitle" class="text-3xl font-bold" style="color: #e8ecf1;">Projetos / Práticas</h2>
+      <div class="flex-1 h-px ml-4" style="background: #1e2a3a;"></div>
+     </div>
+     <div class="grid md:grid-cols-3 gap-6" id="projectsGrid"></div>
+    </div>
+   </section><!-- Results -->
+   <section id="results" class="py-24 px-6 reveal">
+    <div class="max-w-4xl mx-auto">
+     <div class="flex items-center gap-3 mb-10"><span class="mono text-sm" style="color: #00ff88;">05.</span>
+      <h2 id="resultsTitle" class="text-3xl font-bold" style="color: #e8ecf1;">Resultados e Diferenciais</h2>
+      <div class="flex-1 h-px ml-4" style="background: #1e2a3a;"></div>
+     </div>
+     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger" id="resultsGrid"></div>
+    </div>
+   </section><!-- Contact -->
+   <section id="contact" class="py-24 px-6 reveal">
+    <div class="max-w-4xl mx-auto">
+     <div class="flex items-center gap-3 mb-10"><span class="mono text-sm" style="color: #00ff88;">06.</span>
+      <h2 class="text-3xl font-bold" style="color: #e8ecf1;">Contato</h2>
+      <div class="flex-1 h-px ml-4" style="background: #1e2a3a;"></div>
+     </div>
+     <div class="grid md:grid-cols-2 gap-6 stagger">
+      <a href="https://www.linkedin.com/in/joão-victor-chagas-medeiros-428961388/" target="_blank" rel="noopener noreferrer" class="glow-card rounded-xl p-8 group" style="background: #0f1624; border: 1px solid #1e2a3a; text-decoration: none; transition: all 0.3s ease;">
+       <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform" style="background: rgba(0,255,136,0.1);">
+         <i data-lucide="linkedin" style="width:24px;height:24px;color:#00ff88;"></i>
+        </div>
+        <div>
+         <h3 class="font-bold text-lg" style="color:#e8ecf1;">LinkedIn</h3>
+         <p class="text-sm mt-1" style="color:#8892a4;">Conecte-se comigo</p>
+         <p class="text-xs mt-2 group-hover:text-green-400 transition-colors" style="color:#00ff88;">joão-victor-chagas-medeiros-428961388</p>
+        </div>
+       </div></a> <a href="mailto:jvchagas3030@gmail.com" class="glow-card rounded-xl p-8 group" style="background: #0f1624; border: 1px solid #1e2a3a; text-decoration: none; transition: all 0.3s ease;">
+       <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform" style="background: rgba(0,255,136,0.1);">
+         <i data-lucide="mail" style="width:24px;height:24px;color:#00ff88;"></i>
+        </div>
+        <div>
+         <h3 class="font-bold text-lg" style="color:#e8ecf1;">Email</h3>
+         <p class="text-sm mt-1" style="color:#8892a4;">Envie uma mensagem</p>
+         <p class="text-xs mt-2 group-hover:text-green-400 transition-colors" style="color:#00ff88;">jvchagas3030@gmail.com</p>
+        </div>
+       </div></a>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-12 px-6 text-center" style="border-top: 1px solid #1e2a3a;">
+    <p class="mono text-sm" style="color: #8892a4;"><span style="color: #00ff88;">$</span> echo "Obrigado por visitar" <span class="cursor-blink"></span></p>
+   </footer>
+  </div>
+ </body>
+ <script src="js/script.js"></script>
+</html>
