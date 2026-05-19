@@ -911,11 +911,54 @@
     transform: none;
   }
 
+  /* Menu mobile */
+  .nav-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .nav-menu-btn span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .nav-mobile {
+    display: none;
+    position: fixed;
+    top: 56px; left: 0; right: 0;
+    background: rgba(6,13,24,0.97);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 99;
+  }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+  }
+  .nav-mobile a:last-child { border-bottom: none; }
+  .nav-mobile a:hover { color: var(--accent); }
+
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
     .nav-links { display: none; }
-    .nav-menu-btn { display: flex; }
+    .nav-menu-btn { display: flex !important; }
 
     section { padding: 90px 20px 60px; min-height: auto; }
     #hero { min-height: 100svh; padding-top: 70px; }
@@ -967,48 +1010,6 @@
     .skills-grid { grid-template-columns: 1fr; }
     .photo-frame { width: 170px; height: 200px; }
   }
-
-  /* Menu mobile */
-  .nav-menu-btn {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-    background: none;
-    border: none;
-  }
-  .nav-menu-btn span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--accent);
-    transition: all 0.3s;
-  }
-  .nav-mobile {
-    display: none;
-    position: fixed;
-    top: 56px; left: 0; right: 0;
-    background: rgba(6,13,24,0.97);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 24px;
-    flex-direction: column;
-    gap: 4px;
-    z-index: 99;
-  }
-  .nav-mobile.open { display: flex; }
-  .nav-mobile a {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    color: var(--muted);
-    text-decoration: none;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-    transition: color 0.2s;
-  }
-  .nav-mobile a:last-child { border-bottom: none; }
-  .nav-mobile a:hover { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -1051,7 +1052,7 @@
       </h1>
       <p class="hero-role">Dev Freelancer & Help Desk Jr.</p>
       <p class="hero-desc">
-        Desenvolvedor em crescimento, 21 anos, apaixonado pela área de TI e por criar experiências digitais.
+        Desenvolvedor em crescimento, 22 anos, apaixonado pela área de TI e por criar experiências digitais.
         De landing pages, institucionais, Progressive Web App (PWA), Aplicação Web Full Stack (SAAS) e e-commerces — transformo ideias em sites que convertem.
       </p>
       <div class="hero-ctas">
@@ -1084,7 +1085,7 @@
   <div class="sobre-grid">
     <div class="reveal">
       <p class="sobre-text">
-        Olá! Sou <strong>João Victor Chagas Medeiros</strong>, tenho <strong>21 anos</strong> e sou de Campos dos Goytacazes - RJ.
+        Olá! Sou <strong>João Victor Chagas Medeiros</strong>, tenho <strong>22 anos</strong> e sou de Campos dos Goytacazes - RJ.
         Atualmente trabalho como <strong>Operador de Help Desk Jr.</strong> na Minsait - grupo INDRA, onde desenvolvo habilidades técnicas
         e de suporte todos os dias.
       </p>
@@ -1115,7 +1116,7 @@
         <div class="stat-label">Anos de experiência profissional</div>
       </div>
       <div class="stat-card">
-        <div class="stat-num">21</div>
+        <div class="stat-num">22</div>
         <div class="stat-label">Anos de idade, cheio de energia</div>
       </div>
       <div class="stat-card">
