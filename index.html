@@ -960,55 +960,92 @@
     .nav-links { display: none; }
     .nav-menu-btn { display: flex !important; }
 
-    section { padding: 90px 20px 60px; min-height: auto; }
-    #hero { min-height: 100svh; padding-top: 70px; }
+    section { padding: 80px 16px 56px; min-height: auto; }
+    #hero { min-height: 100svh; padding-top: 64px; }
 
-    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+    /* Hero */
+    .hero-grid { grid-template-columns: 1fr; gap: 28px; }
     .hero-photo { order: -1; display: flex; justify-content: center; }
-    .photo-frame { width: 200px; height: 240px; }
-    .photo-badge { bottom: -12px; right: -8px; padding: 8px 12px; }
-    .photo-badge-num { font-size: 18px; }
-    .hero-tag { font-size: 11px; }
-    .hero-role { font-size: 14px; }
-    .hero-desc { font-size: 15px; }
-    .hero-ctas { flex-direction: column; }
-    .btn-primary, .btn-secondary { text-align: center; padding: 13px 24px; }
+    .photo-frame { width: 180px; height: 220px; }
+    .photo-badge { bottom: -10px; right: -6px; padding: 7px 10px; }
+    .photo-badge-num { font-size: 16px; }
+    .photo-badge-text { font-size: 8px; }
+    .hero-tag { font-size: 10px; margin-bottom: 10px; }
+    .hero-role { font-size: 13px; margin-bottom: 16px; }
+    .hero-desc { font-size: 14px; line-height: 1.65; margin-bottom: 28px; }
+    .hero-ctas { flex-direction: column; gap: 10px; }
+    .btn-primary, .btn-secondary { text-align: center; padding: 13px 20px; font-size: 13px; width: 100%; }
 
-    .section-title { font-size: 28px; margin-bottom: 32px; }
+    /* Section titles */
+    .section-eyebrow { font-size: 10px; }
+    .section-title { font-size: 26px; margin-bottom: 28px; }
 
-    .sobre-grid { grid-template-columns: 1fr; gap: 32px; }
-    .skills-grid { grid-template-columns: 1fr 1fr; }
-    .stats-block { grid-template-columns: 1fr 1fr; gap: 12px; }
-    .stat-num { font-size: 28px; }
+    /* Sobre */
+    #sobre { padding-top: 80px; }
+    .sobre-grid { grid-template-columns: 1fr; gap: 28px; }
+    .sobre-text { font-size: 14px; line-height: 1.7; }
+    .skills-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .skill-item { font-size: 11px; }
+    .stats-block { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat-card { padding: 16px; }
+    .stat-num { font-size: 26px; }
+    .stat-label { font-size: 12px; }
 
-    .timeline { padding-left: 24px; }
-    .timeline-dot { left: -30px; }
-    .timeline-card { padding: 20px; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%); }
-    .timeline-role { font-size: 17px; }
-    .timeline-tags { gap: 6px; }
-    .tag { font-size: 10px; padding: 3px 10px; }
+    /* Experiência */
+    #experiencia { padding-top: 80px; }
+    .timeline { padding-left: 20px; }
+    .timeline-dot { left: -26px; width: 10px; height: 10px; }
+    .timeline-card { padding: 18px 16px; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); }
+    .timeline-company { font-size: 10px; }
+    .timeline-role { font-size: 16px; }
+    .timeline-period { font-size: 11px; flex-wrap: wrap; gap: 6px; }
+    .timeline-desc { font-size: 13px; line-height: 1.65; }
+    .timeline-tags { gap: 5px; flex-wrap: wrap; }
+    .tag { font-size: 10px; padding: 3px 8px; }
+    .active-badge { font-size: 9px; padding: 2px 6px; }
 
-    .cursos-grid { grid-template-columns: 1fr; gap: 14px; }
-    .curso-card { padding: 20px; }
+    /* Formação */
+    #formacao { padding-top: 80px; }
+    .cursos-grid { grid-template-columns: 1fr; gap: 12px; }
+    .curso-card { padding: 18px; gap: 8px; }
+    .curso-icon { width: 38px; height: 38px; font-size: 16px; }
+    .curso-name { font-size: 15px; }
+    .curso-inst { font-size: 12px; }
+    .curso-status { font-size: 11px; }
 
-    .projetos-grid { grid-template-columns: 1fr; gap: 16px; }
-    .projeto-thumb { height: 180px; }
+    /* Projetos */
+    #projetos { padding-top: 80px; }
+    .projetos-grid { grid-template-columns: 1fr; gap: 14px; }
+    .projeto-thumb { height: 160px; }
+    .projeto-content { padding: 16px; gap: 6px; }
+    .projeto-type { font-size: 9px; }
+    .projeto-title { font-size: 15px; }
+    .projeto-desc { font-size: 12px; }
+    .projeto-links { gap: 10px; padding-top: 10px; margin-top: 8px; }
+    .projeto-link { font-size: 11px; }
+    .projeto-badge-admin { font-size: 10px; padding: 2px 8px; }
 
-    .contato-inner { padding: 36px 20px; }
-    .contato-title { font-size: 28px; }
-    .contato-sub { font-size: 14px; }
-    .contato-links { flex-direction: column; align-items: center; gap: 12px; }
-    .contato-link { width: 100%; justify-content: center; font-size: 12px; padding: 12px 16px; }
+    /* Contato */
+    #contato { padding-top: 80px; }
+    .contato-inner { padding: 30px 16px; }
+    .contato-title { font-size: 26px; }
+    .contato-sub { font-size: 13px; margin-bottom: 24px; }
+    .contato-links { flex-direction: column; align-items: stretch; gap: 10px; }
+    .contato-link { width: 100%; justify-content: center; font-size: 12px; padding: 12px 14px; }
 
-    footer { padding: 20px; flex-direction: column; gap: 6px; text-align: center; }
+    footer { padding: 18px 16px; flex-direction: column; gap: 6px; text-align: center; }
     .footer-text { font-size: 11px; }
   }
 
   @media (max-width: 400px) {
+    section { padding: 76px 14px 48px; }
     .hero-name { font-size: 20px; white-space: normal; }
-    .stats-block { grid-template-columns: 1fr; }
+    .stats-block { grid-template-columns: 1fr 1fr; }
     .skills-grid { grid-template-columns: 1fr; }
-    .photo-frame { width: 170px; height: 200px; }
+    .photo-frame { width: 160px; height: 195px; }
+    .section-title { font-size: 22px; }
+    .timeline-card { padding: 14px 12px; }
+    .sobre-text { font-size: 13px; }
   }
 </style>
 </head>
