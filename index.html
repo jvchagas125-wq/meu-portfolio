@@ -911,6 +911,60 @@
     transform: none;
   }
 
+  /* Portfolio entry animation */
+  .portfolio-enter {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #060d18;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    transition: opacity 0.6s ease;
+  }
+  .portfolio-enter.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .pe-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    animation: peSlideUp 0.6s 0.1s both;
+  }
+  .pe-logo span { color: var(--accent2); }
+  .pe-tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    animation: peSlideUp 0.5s 0.3s both;
+  }
+  .pe-bar {
+    width: 180px;
+    height: 2px;
+    background: var(--bg3);
+    border-radius: 2px;
+    overflow: hidden;
+    animation: peSlideUp 0.4s 0.4s both;
+  }
+  .pe-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, var(--accent), var(--accent2));
+    border-radius: 2px;
+    animation: peFill 0.7s 0.45s forwards ease;
+  }
+  @keyframes peSlideUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes peFill { to { width: 100%; } }
+
   /* Transition overlay */
   .page-transition {
     position: fixed;
@@ -1114,6 +1168,13 @@
 
 <div class="bg-glow bg-glow-1"></div>
 <div class="bg-glow bg-glow-2"></div>
+
+<!-- Portfolio entry animation -->
+<div class="portfolio-enter" id="portfolioEnter">
+  <div class="pe-logo">JV<span>.</span>DEV</div>
+  <div class="pe-tagline">// CARREGANDO PORTFÓLIO</div>
+  <div class="pe-bar"><div class="pe-bar-fill"></div></div>
+</div>
 
 <!-- Transition overlay -->
 <div class="page-transition" id="pageTransition">
@@ -1499,6 +1560,15 @@
     navMobile.classList.remove('open');
     menuBtn.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
   }
+  // Remover animação de entrada
+  window.addEventListener('load', () => {
+    const enter = document.getElementById('portfolioEnter');
+    setTimeout(() => {
+      enter.classList.add('fade-out');
+      setTimeout(() => enter.remove(), 600);
+    }, 1200);
+  });
+
   // Transição para página de serviços
   function goToServicos(e) {
     e.preventDefault();
