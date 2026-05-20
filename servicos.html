@@ -668,13 +668,6 @@
 <div class="bg-glow bg-glow-1"></div>
 <div class="bg-glow bg-glow-2"></div>
 
-<!-- Page enter overlay -->
-<div class="page-enter" id="pageEnter">
-  <div class="pe-logo">JV<span>.</span>DEV</div>
-  <div class="pe-text">// SERVIÇOS & VALORES</div>
-  <div class="pe-bar"><div class="pe-bar-fill"></div></div>
-</div>
-
 <nav>
   <a href="index.html" class="nav-logo">JV<span>.</span>DEV</a>
   <a href="index.html" class="nav-back">← voltar ao portfólio</a>
@@ -909,14 +902,6 @@
     });
   }, { threshold: 0.1 });
   cards.forEach(c => obs.observe(c));
-  // Remover overlay de entrada após animação
-  window.addEventListener('load', () => {
-    const overlay = document.getElementById('pageEnter');
-    setTimeout(() => {
-      overlay.classList.add('fade-out');
-      setTimeout(() => overlay.remove(), 500);
-    }, 1100);
-  });
 </script>
 </body>
 </html>
