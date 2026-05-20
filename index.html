@@ -911,7 +911,68 @@
     transform: none;
   }
 
-  /* Menu mobile */
+  /* Transition overlay */
+  .page-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: #060d18;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .page-transition.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .pt-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s 0.15s ease;
+  }
+  .pt-logo span { color: var(--accent2); }
+  .page-transition.active .pt-logo {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .pt-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    opacity: 0;
+    transition: opacity 0.4s 0.3s ease;
+  }
+  .page-transition.active .pt-text { opacity: 1; }
+  .pt-bar {
+    width: 200px;
+    height: 2px;
+    background: var(--bg3);
+    border-radius: 2px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s 0.3s ease;
+  }
+  .page-transition.active .pt-bar { opacity: 1; }
+  .pt-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, var(--accent), var(--accent2));
+    border-radius: 2px;
+    transition: width 0.6s 0.4s ease;
+  }
+  .page-transition.active .pt-bar-fill { width: 100%; }
+
   .nav-menu-btn {
     display: none;
     flex-direction: column;
@@ -1053,6 +1114,13 @@
 
 <div class="bg-glow bg-glow-1"></div>
 <div class="bg-glow bg-glow-2"></div>
+
+<!-- Transition overlay -->
+<div class="page-transition" id="pageTransition">
+  <div class="pt-logo">JV<span>.</span>DEV</div>
+  <div class="pt-text">REDIRECIONANDO PARA SERVIÇOS...</div>
+  <div class="pt-bar"><div class="pt-bar-fill" id="ptBarFill"></div></div>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -1431,6 +1499,16 @@
     navMobile.classList.remove('open');
     menuBtn.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
   }
+  // Transição para página de serviços
+  function goToServicos(e) {
+    e.preventDefault();
+    const overlay = document.getElementById('pageTransition');
+    overlay.classList.add('active');
+    setTimeout(() => { window.location.href = 'servicos.html'; }, 1000);
+  }
+  document.querySelectorAll('a[href="servicos.html"]').forEach(link => {
+    link.addEventListener('click', goToServicos);
+  });
 </script>
 </body>
 </html>
