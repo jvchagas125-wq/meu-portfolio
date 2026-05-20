@@ -564,6 +564,57 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* Page enter animation */
+  .page-enter {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #060d18;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    transition: opacity 0.5s ease;
+  }
+  .page-enter.fade-out { opacity: 0; pointer-events: none; }
+  .pe-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    animation: peUp 0.5s 0.1s both;
+  }
+  .pe-logo span { color: var(--accent2); }
+  .pe-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    animation: peUp 0.4s 0.25s both;
+  }
+  .pe-bar {
+    width: 200px;
+    height: 2px;
+    background: var(--bg3);
+    border-radius: 2px;
+    overflow: hidden;
+    animation: peUp 0.3s 0.3s both;
+  }
+  .pe-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, var(--accent), var(--accent2));
+    border-radius: 2px;
+    animation: fillBar 0.6s 0.35s forwards ease;
+  }
+  @keyframes fillBar { to { width: 100%; } }
+  @keyframes peUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
@@ -616,6 +667,13 @@
 
 <div class="bg-glow bg-glow-1"></div>
 <div class="bg-glow bg-glow-2"></div>
+
+<!-- Page enter overlay -->
+<div class="page-enter" id="pageEnter">
+  <div class="pe-logo">JV<span>.</span>DEV</div>
+  <div class="pe-text">// SERVIÇOS & VALORES</div>
+  <div class="pe-bar"><div class="pe-bar-fill"></div></div>
+</div>
 
 <nav>
   <a href="index.html" class="nav-logo">JV<span>.</span>DEV</a>
@@ -851,6 +909,14 @@
     });
   }, { threshold: 0.1 });
   cards.forEach(c => obs.observe(c));
+  // Remover overlay de entrada após animação
+  window.addEventListener('load', () => {
+    const overlay = document.getElementById('pageEnter');
+    setTimeout(() => {
+      overlay.classList.add('fade-out');
+      setTimeout(() => overlay.remove(), 500);
+    }, 1100);
+  });
 </script>
 </body>
 </html>
