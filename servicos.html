@@ -567,14 +567,48 @@
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
-    .hero { padding: 110px 20px 40px; }
-    .services-section { padding: 0 20px 60px; }
-    .services-grid { grid-template-columns: 1fr; }
-    .service-card { padding: 24px; }
-    .cta-section { padding: 0 20px 60px; }
-    .cta-inner { padding: 36px 20px; }
-    .cta-title { font-size: 26px; }
-    footer { padding: 20px; flex-direction: column; gap: 6px; text-align: center; }
+    .nav-logo { font-size: 16px; }
+    .nav-back { font-size: 11px; }
+
+    .hero { padding: 100px 20px 32px; }
+    .hero-title { font-size: 32px; }
+    .hero-sub { font-size: 14px; margin-bottom: 32px; }
+
+    .services-section { padding: 0 16px 48px; }
+    .services-grid { grid-template-columns: 1fr; gap: 16px; }
+
+    .service-card { padding: 20px; }
+    .service-top { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .price-badge { text-align: left; }
+    .price-value { font-size: 18px; }
+    .service-name { font-size: 18px; }
+    .service-emoji { font-size: 30px; }
+    .features-list li { font-size: 13px; }
+    .addon-pill { font-size: 11px; padding: 4px 10px; }
+
+    .obs-section { padding: 0 16px 32px; }
+    .obs-inner { padding: 20px 16px; }
+    .obs-grid { grid-template-columns: 1fr; gap: 14px; }
+    .obs-block { padding: 16px; }
+    .obs-title { font-size: 13px; }
+    .obs-list li { font-size: 12px; }
+    .obs-footer-msg p { font-size: 14px; }
+
+    .cta-section { padding: 0 16px 56px; }
+    .cta-inner { padding: 30px 18px; }
+    .cta-title { font-size: 24px; }
+    .cta-sub { font-size: 13px; }
+    .cta-buttons { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 14px 20px; }
+
+    footer { padding: 20px 16px; flex-direction: column; gap: 6px; text-align: center; }
+    .footer-text { font-size: 11px; }
+  }
+
+  @media (max-width: 400px) {
+    .hero-title { font-size: 26px; }
+    .service-icon-name { gap: 10px; }
+    .service-name { font-size: 16px; }
   }
 </style>
 </head>
