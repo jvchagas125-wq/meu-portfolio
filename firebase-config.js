@@ -7,12 +7,12 @@
 //    (Console do Firebase > Configurações do projeto > Seus apps > Configuração do SDK)
 //    Essas chaves podem ficar públicas: quem protege os dados são as regras do Firestore.
 export const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyBHfxOFVnw2EdXc3jP1bJ_OoMiESzYICdg",
-  authDomain: "meu-portfolio-ccb4f.firebaseapp.com",
-  projectId: "meu-portfolio-ccb4f",
-  storageBucket: "meu-portfolio-ccb4f.firebasestorage.app",
-  messagingSenderId: "170413489866",
-  appId: "1:170413489866:web:4410db42685fb033b37e33"
+  apiKey: "COLE_AQUI",
+  authDomain: "COLE_AQUI.firebaseapp.com",
+  projectId: "COLE_AQUI",
+  storageBucket: "COLE_AQUI.appspot.com",
+  messagingSenderId: "COLE_AQUI",
+  appId: "COLE_AQUI"
 };
 
 // 2) Cloudinary (já preenchido com os seus dados)
