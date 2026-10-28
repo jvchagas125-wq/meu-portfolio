@@ -57,6 +57,18 @@ git push
 3. Clique em **Salvar e publicar** uma vez: isso grava no banco o conteúdo que já está no site.
 4. A partir daí, tudo que você editar e salvar aparece no portfólio na hora (recarregue a página).
 
+## Várias imagens e vídeos por projeto ou curso
+Em **Projetos** e **Cursos e certificações**, abra o item e use **Imagens e vídeos do card**:
+envie vários arquivos de uma vez (ou arraste para a caixa), reordene com as setas ↑ ↓ ou remova.
+Com mais de um arquivo, o card vira uma galeria que troca sozinha a cada 3 segundos.
+Limites do Cloudinary no plano gratuito: imagem até 10 MB e vídeo até 100 MB por arquivo.
+
+## Tempo real
+Ao clicar em **Salvar e publicar**, o portfólio e a página de serviços que estiverem abertos
+(em qualquer aparelho) se atualizam sozinhos em cerca de um segundo, sem recarregar.
+A publicação acontece ao salvar — não a cada letra digitada — para ninguém ver um texto pela metade.
+Cada visitante com o site aberto conta como uma leitura no Firestore (plano gratuito: 50.000 por dia).
+
 ## Problemas comuns
 | Mensagem | O que fazer |
 |---|---|

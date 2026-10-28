@@ -2,7 +2,7 @@
 // A senha NÃO fica neste arquivo: ela existe só no Firebase Authentication.
 
 import { FIREBASE_CONFIG, ADMIN_EMAIL_DOMAIN } from './firebase-config.js';
-import { DEFAULT_HOME, DEFAULT_SERVICOS, deepMerge, clone } from './content-default.js';
+import { DEFAULT_HOME, DEFAULT_SERVICOS, deepMerge, clone, normalizeMedia } from './content-default.js';
 import { PAGES, mountPage, ensureIds, h } from './editor.js';
 
 const SDK = 'https://www.gstatic.com/firebasejs/10.12.2';
@@ -109,6 +109,7 @@ async function loadDoc(id) {
     fromDefault.add(id);
     dirtyDocs.add(id);
   }
+  normalizeMedia(state[id]);
   ensureIds(state[id]);
 }
 

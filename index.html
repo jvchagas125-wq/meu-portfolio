@@ -1228,9 +1228,10 @@
     overflow: hidden;
   }
   .cx-media::after {
-    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 38%;
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 38%; z-index: 2;
     background: linear-gradient(transparent, var(--bg2)); pointer-events: none;
   }
+  .cx-media.is-contain::after { display: none; }
   .cx-media img, .cx-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
   .cx-media.is-contain img, .cx-media.is-contain video { inset: 13% 14%; width: 72%; height: 74%; object-fit: contain; object-position: center; z-index: 1; }
   .cx-emoji { font-size: 58px; opacity: .9; position: relative; z-index: 1; }
@@ -1275,7 +1276,7 @@
   }
   .cx-dot i { position: absolute; inset: 0; transform-origin: left; transform: scaleX(0); background: linear-gradient(90deg, var(--accent), var(--accent2)); }
   .cx-dot.on { width: 46px; }
-  .cx-dot.on i { animation: cxFill 5.6s linear forwards; }
+  .cx-dot.on i { animation: cxFill var(--dwell, 5.6s) linear forwards; }
   .cx.paused .cx-dot.on i { animation-play-state: paused; }
   @keyframes cxFill { to { transform: scaleX(1); } }
 
@@ -1291,6 +1292,32 @@
     .cx-card { transition: none; }
     .cx-dot.on i { animation: none; transform: scaleX(1); }
   }
+
+  /* ================= v2 — atualização ao vivo: sem repetir as animações de entrada ================= */
+  body.is-live .hero-tag, body.is-live .hero-name, body.is-live .hero-role,
+  body.is-live .hero-desc, body.is-live .hero-ctas, body.is-live .hero-photo { animation: none; opacity: 1; }
+
+  /* ================= v2 — galeria de imagens/vídeos dentro do card ================= */
+  .cx-slides { position: absolute; inset: 0; z-index: 1; }
+  .cx-slide { position: absolute; inset: 0; opacity: 0; transition: opacity .7s ease; }
+  .cx-slide.on { opacity: 1; }
+  .cx-m-nav {
+    position: absolute; top: calc(50% - 17px); z-index: 4; width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(6, 13, 24, .6); border: 1px solid var(--border2); color: var(--text); font-size: 20px; line-height: 1;
+    cursor: pointer; display: grid; place-items: center; opacity: .55;
+    transition: opacity .25s, background .25s, transform .25s;
+  }
+  .cx-m-nav.prev { left: 10px; }
+  .cx-m-nav.next { right: 10px; }
+  .cx-card:hover .cx-m-nav, .cx-m-nav:focus-visible { opacity: 1; }
+  .cx-m-nav:hover { background: rgba(56, 189, 248, .25); transform: scale(1.08); }
+  .cx-m-dots { position: absolute; left: 0; right: 0; bottom: 10px; z-index: 4; display: flex; justify-content: center; gap: 6px; }
+  .cx-m-dot {
+    width: 7px; height: 7px; padding: 0; border-radius: 99px; cursor: pointer; border: 0;
+    background: rgba(232, 240, 254, .4); transition: width .35s cubic-bezier(.22, 1, .36, 1), background .3s;
+  }
+  .cx-m-dot.on { width: 20px; background: var(--c); }
+  @media (prefers-reduced-motion: reduce) { .cx-slide { transition: none; } }
 </style>
 </head>
 <body>
@@ -1369,8 +1396,8 @@ setTimeout(hideEntry, 6000); // segurança: nunca deixa a tela travada
 
 /* ---------- conteúdo ---------- */
 let jumped = false;
-function draw(data) {
-  renderHome(data);
+function draw(data, opts) {
+  renderHome(data, opts);
   if (!jumped && location.hash.length > 1) {
     jumped = true;
     requestAnimationFrame(() => document.querySelector(location.hash)?.scrollIntoView({ behavior: 'instant', block: 'start' }));

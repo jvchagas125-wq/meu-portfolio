@@ -19,6 +19,17 @@ export function deepMerge(def, rem) {
   return rem === undefined || rem === null ? def : rem;
 }
 
+// Converte o formato antigo (uma única "midia") para a lista "midias".
+export function normalizeMedia(doc) {
+  for (const k of ['cursos', 'projetos']) {
+    (Array.isArray(doc?.[k]) ? doc[k] : []).forEach((it) => {
+      if (!Array.isArray(it.midias)) it.midias = it.midia ? [it.midia] : [];
+      delete it.midia;
+    });
+  }
+  return doc;
+}
+
 export const DEFAULT_HOME = {
   hero: {
     tag: '// disponível para projetos freelancer',
@@ -84,7 +95,7 @@ export const DEFAULT_HOME = {
       status: '● Em andamento · Conclusão: Dez/2026',
       icone: '🎓',
       cor: 'blue',
-      midia: '',
+      midias: [],
       ajuste: 'cover',
       fundo: '',
       flags: [],
@@ -98,7 +109,7 @@ export const DEFAULT_HOME = {
       status: '✓ Diploma concluído',
       icone: '📜',
       cor: 'purple',
-      midia: '',
+      midias: [],
       ajuste: 'cover',
       fundo: '',
       flags: [],
@@ -112,7 +123,7 @@ export const DEFAULT_HOME = {
       status: '✓ Certificado HDI',
       icone: '🏆',
       cor: 'green',
-      midia: '',
+      midias: [],
       ajuste: 'cover',
       fundo: '',
       flags: [],
@@ -128,7 +139,7 @@ export const DEFAULT_HOME = {
       descricao:
         'Landing page/ One Page completa para doceria artesanal com cardápio interativo, modais detalhados, galeria de fotos, cardápios sazonais e botão de WhatsApp com mensagem pré-preenchida por produto. Instalável como PWA. O painel admin permite à cliente gerenciar todo o conteúdo sem conhecimento técnico: produtos, fotos, contatos e campanhas com validade automática — tudo refletindo em tempo real via Firebase Firestore.',
       cor: 'rose',
-      midia: 'https://res.cloudinary.com/dcvhqnr1c/image/upload/q_auto/f_auto/v1778778411/imagem_2026-05-14_140648057_ebqe10.png',
+      midias: ['https://res.cloudinary.com/dcvhqnr1c/image/upload/q_auto/f_auto/v1778778411/imagem_2026-05-14_140648057_ebqe10.png'],
       ajuste: 'cover',
       fundo: '',
       icone: '🎂',
@@ -143,7 +154,7 @@ export const DEFAULT_HOME = {
       descricao:
         'Plataforma digital completa para barbearia com dois PWAs integrados. App do cliente com login por telefone, agendamento, loja, moeda interna (GB$) via Mercado Pago, planos de assinatura, notificações push e suporte offline. Painel admin com dashboard de métricas, gestão completa, notificações push individuais ou em massa e integração com Telegram.',
       cor: 'amber',
-      midia: 'https://res.cloudinary.com/dcvhqnr1c/image/upload/q_auto/f_auto/v1778784443/Captura_de_tela_2026-05-14_154702_viqzwd.png',
+      midias: ['https://res.cloudinary.com/dcvhqnr1c/image/upload/q_auto/f_auto/v1778784443/Captura_de_tela_2026-05-14_154702_viqzwd.png'],
       ajuste: 'cover',
       fundo: '',
       icone: '✂️',
@@ -158,7 +169,7 @@ export const DEFAULT_HOME = {
       descricao:
         'Landing page completa para gerenciamento de lista de presentes com reserva em tempo real, painel admin com autenticação, upload de imagens via Cloudinary, suporte a múltiplos links por presente, reordenação drag-and-drop, cancelamento de reservas e rodapé editável pelo painel.',
       cor: 'purple',
-      midia: 'https://res.cloudinary.com/dcvhqnr1c/image/upload/q_auto/f_auto/v1778785037/imagem_2026-05-14_155714997_dipp93.png',
+      midias: ['https://res.cloudinary.com/dcvhqnr1c/image/upload/q_auto/f_auto/v1778785037/imagem_2026-05-14_155714997_dipp93.png'],
       ajuste: 'cover',
       fundo: '',
       icone: '🎁',
@@ -173,7 +184,7 @@ export const DEFAULT_HOME = {
       descricao:
         'Vitrine digital responsiva com galeria, filtros por categoria, modal com carrossel de fotos e swipe mobile, integração com WhatsApp e status de "vendido" em tempo real via Firebase. Painel admin com CRUD completo de produtos, categorias, upload via Cloudinary e sincronização instantânea na vitrine. Domínio próprio registrado pelo cliente na Hostgator.',
       cor: 'green',
-      midia: 'https://res.cloudinary.com/dcvhqnr1c/image/upload/q_auto/f_auto/v1779039799/icon-512_zmkmye.svg',
+      midias: ['https://res.cloudinary.com/dcvhqnr1c/image/upload/q_auto/f_auto/v1779039799/icon-512_zmkmye.svg'],
       ajuste: 'contain',
       fundo: '#1a1a1a',
       icone: '🛍️',
@@ -188,7 +199,7 @@ export const DEFAULT_HOME = {
       descricao:
         'Sistema de agendamento de Adoração ao Santíssimo Sacramento. O lado público permite identificação por telefone, agendamento em calendário, envio de intenções de missa e consulta de avisos da paróquia. O painel admin gerencia horários, avisos, agendamentos e exporta relatórios em Excel e PDF.',
       cor: 'blue',
-      midia: 'arautos-logo.png',
+      midias: ['arautos-logo.png'],
       ajuste: 'contain',
       fundo: '#4a0a0a',
       icone: '✝️',

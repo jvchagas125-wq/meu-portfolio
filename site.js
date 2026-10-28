@@ -1,4 +1,4 @@
-// site.js — busca o conteúdo salvo pelo painel e entrega às páginas públicas.
+// site.js — entrega às páginas públicas o conteúdo salvo pelo painel, em tempo real.
 // Se o Firebase ainda não estiver configurado (ou estiver fora do ar), o site usa o conteúdo padrão.
 
 import { FIREBASE_CONFIG } from './firebase-config.js';
@@ -20,31 +20,38 @@ function writeCache(id, data) {
   try {
     localStorage.setItem(KEY + id, JSON.stringify(data));
   } catch {
-    /* cache é opcional */
+    /* o cache é opcional */
   }
 }
 
-async function fetchRemote(id, timeoutMs) {
-  if (!isConfigured()) return null;
-  const job = (async () => {
-    const [{ initializeApp, getApps }, { getFirestore, doc, getDoc }] = await Promise.all([
+// Fica ouvindo o documento: o banco avisa a cada alteração salva no painel.
+async function listen(id, onData, onError) {
+  try {
+    const [{ initializeApp, getApps }, { getFirestore, doc, onSnapshot }] = await Promise.all([
       import(`${SDK}/firebase-app.js`),
       import(`${SDK}/firebase-firestore.js`)
     ]);
     const app = getApps().length ? getApps()[0] : initializeApp(FIREBASE_CONFIG);
-    const snap = await getDoc(doc(getFirestore(app), 'site', id));
-    return snap.exists() ? snap.data() : null;
-  })().catch((e) => {
-    console.warn('Não foi possível ler o conteúdo do painel:', e);
-    return null;
-  });
-  return Promise.race([job, new Promise((r) => setTimeout(() => r(null), timeoutMs))]);
+    return onSnapshot(
+      doc(getFirestore(app), 'site', id),
+      (snap) => onData(snap.exists() ? snap.data() : null),
+      (err) => {
+        console.warn('Não foi possível ouvir o conteúdo do painel:', err);
+        onError(err);
+      }
+    );
+  } catch (e) {
+    console.warn('Não foi possível carregar o Firebase:', e);
+    onError(e);
+  }
 }
 
 /**
- * Mostra o conteúdo o mais rápido possível:
- *  - com cache: desenha na hora e atualiza em seguida se algo mudou;
- *  - sem cache: espera o banco (até 3,5 s) ou usa o padrão.
+ * Mostra o conteúdo o mais rápido possível e o mantém atualizado:
+ *  - com cache: desenha na hora; o banco confirma (ou corrige) em seguida;
+ *  - sem cache: espera o banco (até 3,5 s) ou usa o conteúdo padrão;
+ *  - depois disso, cada "Salvar e publicar" no painel redesenha a página sozinha.
+ * render(dados, { live }) — live = true quando é uma atualização depois do primeiro desenho.
  */
 export async function bootPage({ id, defaults, render }) {
   const cached = readCache(id);
@@ -52,18 +59,47 @@ export async function bootPage({ id, defaults, render }) {
   const show = (data) => {
     const merged = deepMerge(defaults, data);
     const sig = JSON.stringify(merged);
-    if (sig !== shown) {
-      shown = sig;
-      render(merged);
-    }
+    if (sig === shown) return;
+    const live = shown !== null;
+    shown = sig;
+    render(merged, { live });
   };
 
   if (cached) show(cached);
-  const remote = await fetchRemote(id, cached ? 6000 : 3500);
-  if (remote) {
-    writeCache(id, remote);
-    show(remote);
-  } else if (!cached) {
-    show(clone(defaults));
+  if (!isConfigured()) {
+    if (!cached) show(clone(defaults));
+    return;
   }
+
+  await new Promise((resolve) => {
+    let released = false;
+    const release = () => {
+      if (!released) {
+        released = true;
+        resolve();
+      }
+    };
+    const fallback = () => {
+      if (shown === null) show(clone(defaults));
+      release();
+    };
+    const timer = setTimeout(fallback, cached ? 6000 : 3500);
+    listen(
+      id,
+      (data) => {
+        clearTimeout(timer);
+        if (data) {
+          writeCache(id, data);
+          show(data);
+        } else if (shown === null) {
+          show(clone(defaults));
+        }
+        release();
+      },
+      () => {
+        clearTimeout(timer);
+        fallback();
+      }
+    );
+  });
 }

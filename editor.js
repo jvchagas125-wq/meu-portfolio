@@ -71,7 +71,7 @@ const DICA_NEGRITO = 'Use **dois asteriscos** em volta de uma parte para deixá-
 const DICA_QUEBRA = 'Use | para quebrar a linha.';
 
 const FIELDS_MIDIA = [
-  { k: 'midia', t: 'image', label: 'Imagem ou vídeo do card', size: MIDIA },
+  { k: 'midias', t: 'gallery', label: 'Imagens e vídeos do card', size: MIDIA, hint: 'Dá para enviar vários de uma vez. O primeiro aparece primeiro; com mais de um, o card mostra uma galeria que troca sozinha.' },
   { k: 'ajuste', t: 'select', label: 'Como encaixar a imagem', options: AJUSTE, half: true },
   { k: 'fundo', t: 'color', label: 'Cor de fundo atrás da imagem', half: true, hint: 'Útil para logos. Deixe vazio para usar a cor padrão.' },
   { k: 'icone', t: 'text', label: 'Emoji quando não houver imagem', half: true, ph: '🎓' }
@@ -205,7 +205,7 @@ export const PAGES = [
         itemPlural: 'cursos',
         itemTitle: (it) => it.titulo,
         itemSub: (it) => [it.tipo, it.instituicao].filter(Boolean).join(' · '),
-        make: () => ({ tipo: 'CERTIFICAÇÃO', titulo: 'Novo curso', instituicao: '', descricao: '', status: '✓ Concluído', icone: '🎓', cor: 'blue', midia: '', ajuste: 'cover', fundo: '', flags: [], linkCertificado: '' }),
+        make: () => ({ tipo: 'CERTIFICAÇÃO', titulo: 'Novo curso', instituicao: '', descricao: '', status: '✓ Concluído', icone: '🎓', cor: 'blue', midias: [], ajuste: 'cover', fundo: '', flags: [], linkCertificado: '' }),
         fields: [
           { k: 'tipo', t: 'text', label: 'Tipo', half: true, ph: 'GRADUAÇÃO, CERTIFICAÇÃO…' },
           { k: 'titulo', t: 'text', label: 'Título do curso', half: true },
@@ -239,7 +239,7 @@ export const PAGES = [
         itemPlural: 'projetos',
         itemTitle: (it) => it.titulo,
         itemSub: (it) => it.tipo,
-        make: () => ({ tipo: 'LANDING PAGE', titulo: 'Novo projeto', descricao: '', cor: 'blue', midia: '', ajuste: 'cover', fundo: '', icone: '🌐', flags: [], linkSite: '', linkGithub: '', painelAdmin: false }),
+        make: () => ({ tipo: 'LANDING PAGE', titulo: 'Novo projeto', descricao: '', cor: 'blue', midias: [], ajuste: 'cover', fundo: '', icone: '🌐', flags: [], linkSite: '', linkGithub: '', painelAdmin: false }),
         fields: [
           { k: 'tipo', t: 'text', label: 'Tipo do site', half: true, ph: 'LANDING PAGE, PWA, E-COMMERCE…' },
           { k: 'titulo', t: 'text', label: 'Título do site', half: true },
@@ -847,6 +847,144 @@ function imageField(obj, f, ctx) {
   return wrapFld(f, labelEl(f), drop, h('div', { class: 'url-row' }, h('span', {}, 'Link'), urlIn));
 }
 
+function galleryField(obj, f, ctx) {
+  let a = get(obj, f.k);
+  if (!Array.isArray(a)) {
+    a = [];
+    set(obj, f.k, a);
+  }
+  const size = f.size || { w: 1280, h: 720, note: '' };
+  const list = h('div', { class: 'gal' });
+  const msg = h('p', { class: 'up-msg' });
+  const fill = h('i');
+  const fileIn = h('input', { type: 'file', accept: 'image/*,video/*', multiple: true, hidden: true });
+  const pick = h('button', { type: 'button', class: 'btn-soft' }, '📤 Enviar imagens ou vídeos');
+  const linkIn = h('input', { type: 'text', placeholder: 'Ou cole o link de uma imagem ou vídeo e aperte Enter', spellcheck: 'false' });
+  const drop = h(
+    'div',
+    { class: 'up-drop gal-drop' },
+    h(
+      'div',
+      { class: 'up-side' },
+      h('div', { class: 'up-size' }, h('b', {}, `📐 Tamanho ideal: ${size.w} × ${size.h} px`), size.note ? h('span', {}, size.note) : null),
+      h('div', { class: 'up-actions' }, pick),
+      h('div', { class: 'up-bar' }, fill),
+      msg,
+      linkIn
+    )
+  );
+
+  function move(i, d) {
+    const j = i + d;
+    if (j < 0 || j >= a.length) return;
+    [a[i], a[j]] = [a[j], a[i]];
+    draw();
+    ctx.dirty();
+  }
+  function remove(i) {
+    a.splice(i, 1);
+    draw();
+    ctx.dirty();
+  }
+  function draw() {
+    list.innerHTML = '';
+    if (!a.length) list.append(h('p', { class: 'empty' }, 'Nenhum arquivo ainda. Envie abaixo.'));
+    a.forEach((u, i) => {
+      const thumb = h('div', { class: 'gal-thumb' }, isVideoUrl(u) ? h('video', { src: u, muted: true, playsinline: true, preload: 'metadata' }) : h('img', { src: u, alt: '' }));
+      const inp = h('input', { type: 'text', spellcheck: 'false', 'aria-label': `Link do arquivo ${i + 1}` });
+      inp.value = u;
+      inp.addEventListener('input', () => {
+        a[i] = inp.value.trim();
+        ctx.dirty();
+      });
+      inp.addEventListener('change', draw);
+      list.append(
+        h(
+          'div',
+          { class: 'gal-row' },
+          h('span', { class: 'gal-n' }, String(i + 1)),
+          thumb,
+          inp,
+          iconBtn('Subir', '↑', () => move(i, -1), i === 0),
+          iconBtn('Descer', '↓', () => move(i, 1), i === a.length - 1),
+          delBtn(() => remove(i))
+        )
+      );
+    });
+  }
+
+  async function sendAll(files) {
+    const queue = [...(files || [])];
+    if (!queue.length || drop.classList.contains('busy')) return;
+    drop.classList.add('busy');
+    let done = 0;
+    let off = 0;
+    for (let k = 0; k < queue.length; k++) {
+      const file = queue[k];
+      const isV = (file.type || '').startsWith('video/');
+      if (!isV && !(file.type || '').startsWith('image/')) {
+        ctx.toast(`“${file.name}” não é imagem nem vídeo.`, 'err');
+        continue;
+      }
+      const max = isV ? 100 : 10;
+      if (file.size > max * 1048576) {
+        ctx.toast(`“${file.name}” passa de ${max} MB.`, 'err');
+        continue;
+      }
+      try {
+        fill.style.width = '0%';
+        msg.className = 'up-msg';
+        const r = await cloudUpload(file, (p) => {
+          fill.style.width = `${p}%`;
+          msg.textContent = `Enviando ${k + 1} de ${queue.length}… ${p}%`;
+        });
+        a.push(optimized(r));
+        done++;
+        draw();
+        ctx.dirty();
+        const alvo = size.w / size.h;
+        if (!(r.width && r.height && Math.abs(r.width / r.height - alvo) < alvo * 0.12)) off++;
+      } catch (e) {
+        ctx.toast(`Falha em “${file.name}”: ${e.message}`, 'err');
+      }
+    }
+    drop.classList.remove('busy');
+    fileIn.value = '';
+    msg.className = `up-msg ${off ? 'warn' : done ? 'ok' : ''}`;
+    msg.textContent = done ? `${done} ${done === 1 ? 'arquivo enviado' : 'arquivos enviados'}${off ? ` · ${off} com proporção diferente de ${size.w} × ${size.h} (podem ser cortados ou ajustados)` : ' ✓ proporção ideal'}` : '';
+    if (done) ctx.toast(done === 1 ? 'Arquivo enviado!' : `${done} arquivos enviados!`);
+  }
+
+  pick.addEventListener('click', () => fileIn.click());
+  fileIn.addEventListener('change', () => sendAll(fileIn.files));
+  linkIn.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    const v = linkIn.value.trim();
+    if (!v) return;
+    a.push(v);
+    linkIn.value = '';
+    draw();
+    ctx.dirty();
+  });
+  ['dragenter', 'dragover'].forEach((ev) =>
+    drop.addEventListener(ev, (e) => {
+      e.preventDefault();
+      drop.classList.add('over');
+    })
+  );
+  ['dragleave', 'drop'].forEach((ev) =>
+    drop.addEventListener(ev, (e) => {
+      e.preventDefault();
+      drop.classList.remove('over');
+    })
+  );
+  drop.addEventListener('drop', (e) => sendAll(e.dataTransfer?.files));
+
+  draw();
+  return wrapFld(f, labelEl(f), list, drop, hintEl(f));
+}
+
 /* ----------------------------------------------------------------- montagem */
 function renderField(obj, f, ctx, path, level) {
   switch (f.t) {
@@ -857,6 +995,8 @@ function renderField(obj, f, ctx, path, level) {
     }
     case 'image':
       return imageField(obj, f, ctx);
+    case 'gallery':
+      return galleryField(obj, f, ctx);
     case 'tags':
       return tagsField(obj, f, ctx);
     case 'lines':

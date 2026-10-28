@@ -108,18 +108,38 @@ function experienciaHTML(sec, items) {
 }
 
 /* -------------------------------------------------------------- CARROSSEL */
+function mediaList(it) {
+  const l = arr(it.midias).map(safeUrl).filter(Boolean);
+  if (!l.length) {
+    const one = safeUrl(it.midia); // formato antigo
+    if (one) l.push(one);
+  }
+  return l;
+}
+
+function slideHTML(u, titulo, i) {
+  const m = isVideo(u)
+    ? `<video src="${esc(u)}" muted loop playsinline preload="metadata"></video>`
+    : `<img src="${esc(u)}" alt="${esc(titulo)}" loading="lazy" decoding="async"/>`;
+  return `<div class="cx-slide${i === 0 ? ' on' : ''}">${m}</div>`;
+}
+
 function mediaHTML(it, kind) {
-  const u = safeUrl(it.midia);
+  const list = mediaList(it);
   const bg = safeColor(it.fundo);
   let inner;
-  if (u) {
-    inner = isVideo(u)
-      ? `<video src="${esc(u)}" muted loop playsinline preload="metadata"></video>`
-      : `<img src="${esc(u)}" alt="${esc(it.titulo)}" loading="lazy" decoding="async"/>`;
+  if (list.length) {
+    inner = `<div class="cx-slides">${list.map((u, i) => slideHTML(u, it.titulo, i)).join('')}</div>`;
+    if (list.length > 1) {
+      inner +=
+        `<button class="cx-m-nav prev" type="button" aria-label="Imagem anterior">‹</button>` +
+        `<button class="cx-m-nav next" type="button" aria-label="Próxima imagem">›</button>` +
+        `<div class="cx-m-dots">${list.map((_, i) => `<button class="cx-m-dot${i === 0 ? ' on' : ''}" type="button" aria-label="Ver imagem ${i + 1} de ${list.length}"></button>`).join('')}</div>`;
+    }
   } else {
     inner = `<span class="cx-emoji" aria-hidden="true">${esc(it.icone || (kind === 'curso' ? '🎓' : '🌐'))}</span>`;
   }
-  return `<div class="cx-media${it.ajuste === 'contain' && u ? ' is-contain' : ''}"${bg ? ` style="--mbg:${bg}"` : ''}>${inner}</div>`;
+  return `<div class="cx-media${it.ajuste === 'contain' && list.length ? ' is-contain' : ''}"${bg ? ` style="--mbg:${bg}"` : ''}>${inner}</div>`;
 }
 
 function cardHTML(it, kind) {
@@ -149,12 +169,12 @@ function cardHTML(it, kind) {
   </article>`;
 }
 
-function carrosselHTML(kind, items, rotulo) {
+function carrosselHTML(kind, items, rotulo, start = 0) {
   const list = arr(items);
   if (!list.length) return `<p class="cx-empty">Em breve por aqui.</p>`;
   const dots = list.map((_, i) => `<button class="cx-dot" type="button" aria-label="Ir para o item ${i + 1}"><i></i></button>`).join('');
   return `
-  <div class="cx" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="${esc(rotulo)}">
+  <div class="cx" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="${esc(rotulo)}" data-start="${Number(start) || 0}">
     <div class="cx-stage">${list.map((it) => cardHTML(it, kind)).join('')}</div>
     ${list.length > 1 ? `<button class="cx-nav prev" type="button" aria-label="Anterior">‹</button><button class="cx-nav next" type="button" aria-label="Próximo">›</button>` : ''}
     ${list.length > 1 ? `<div class="cx-dots">${dots}</div>` : ''}
@@ -168,16 +188,63 @@ export function destroyCarousels() {
 
 const media = (q) => (typeof matchMedia === 'function' ? matchMedia(q).matches : false);
 
+const SLIDE_MS = 3000;
+
+function playVideo(v, on) {
+  if (!v) return;
+  if (on) {
+    const r = v.play && v.play();
+    if (r && r.catch) r.catch(() => {});
+  } else if (v.pause) v.pause();
+}
+
+// Galeria de imagens/vídeos de um card: troca sozinha enquanto o card está ativo.
+function mountGallery(card) {
+  const slides = [...card.querySelectorAll('.cx-slide')];
+  const dots = [...card.querySelectorAll('.cx-m-dot')];
+  const n = slides.length;
+  let i = 0;
+  let timer = null;
+  let running = false;
+  const vids = () => slides.forEach((s, j) => playVideo(s.querySelector('video'), running && j === i));
+  const show = (k) => {
+    i = (k + n) % n;
+    slides.forEach((s, j) => s.classList.toggle('on', j === i));
+    dots.forEach((d, j) => d.classList.toggle('on', j === i));
+    vids();
+  };
+  const restart = () => {
+    clearInterval(timer);
+    if (running && n > 1) timer = setInterval(() => !card.closest('.cx')?.classList.contains('paused') && show(i + 1), SLIDE_MS);
+  };
+  card.querySelector('.cx-m-nav.next')?.addEventListener('click', () => (show(i + 1), restart()));
+  card.querySelector('.cx-m-nav.prev')?.addEventListener('click', () => (show(i - 1), restart()));
+  dots.forEach((d, j) => d.addEventListener('click', () => (show(j), restart())));
+  return {
+    activate(on) {
+      running = on;
+      if (n > 1) show(0);
+      else vids();
+      restart();
+    },
+    destroy() {
+      clearInterval(timer);
+    }
+  };
+}
+
 function mountCarousel(el) {
   const cards = [...el.querySelectorAll('.cx-card')];
   const dots = [...el.querySelectorAll('.cx-dot')];
   const stage = el.querySelector('.cx-stage');
   const n = cards.length;
-  let active = 0;
+  let active = Math.min(Math.max(parseInt(el.dataset.start, 10) || 0, 0), n - 1);
   let hovered = false;
   let focused = false;
   let visible = true;
   const prevO = cards.map(() => null);
+  const gals = cards.map(mountGallery);
+  const wasOn = cards.map(() => null);
   const reduce = media('(prefers-reduced-motion: reduce)');
   const canHover = media('(hover: hover)');
 
@@ -207,14 +274,16 @@ function mountCarousel(el) {
         c.style.transition = '';
       }
       prevO[i] = o;
-      const v = c.querySelector('video');
-      if (v) {
-        if (abs === 0) v.play && v.play().catch(() => {});
-        else v.pause && v.pause();
+      if (wasOn[i] !== (abs === 0)) {
+        wasOn[i] = abs === 0;
+        gals[i].activate(abs === 0);
       }
     });
+    el.dataset.active = String(active);
     dots.forEach((d) => d.classList.remove('on'));
     if (dots[active]) {
+      // com várias imagens, o card fica mais tempo em destaque (3 s por imagem)
+      dots[active].style.setProperty('--dwell', `${Math.max(5.6, cards[active].querySelectorAll('.cx-slide').length * 3)}s`);
       void el.offsetWidth;
       dots[active].classList.add('on');
     }
@@ -279,6 +348,7 @@ function mountCarousel(el) {
 
   layout();
   live.push(() => {
+    gals.forEach((g) => g.destroy());
     io && io.disconnect();
     document.removeEventListener('visibilitychange', onVis);
     removeEventListener('resize', onResize);
@@ -332,19 +402,27 @@ export function setupReveal(selector) {
 }
 
 /* ------------------------------------------------------------- PORTFÓLIO */
-export function renderHome(d) {
+const activeOf = (sel) => parseInt(document.querySelector(`${sel} .cx`)?.dataset.active, 10) || 0;
+
+// live = true quando é uma atualização vinda do painel (sem repetir animações de entrada)
+export function renderHome(d, { live = false } = {}) {
+  const start = { cursos: activeOf('#formacao'), projetos: activeOf('#projetos') };
   destroyCarousels();
   put('#hero', heroHTML(d.hero));
   put('#sobre', sobreHTML(d.sobre));
   put('#experiencia', experienciaHTML(d.expSec, d.experiencias));
-  put('#formacao', head(d.cursosSec) + carrosselHTML('curso', d.cursos, 'Cursos e certificações'));
-  put('#projetos', head(d.projetosSec) + carrosselHTML('projeto', d.projetos, 'Projetos'));
+  put('#formacao', head(d.cursosSec) + carrosselHTML('curso', d.cursos, 'Cursos e certificações', start.cursos));
+  put('#projetos', head(d.projetosSec) + carrosselHTML('projeto', d.projetos, 'Projetos', start.projetos));
   put('#contato', contatoHTML(d.contato));
   put('#rodape', rodapeHTML(d.rodape));
   initCarousels();
   setupReveal('.reveal');
+  if (live) {
+    document.body.classList.add('is-live');
+    document.querySelectorAll('.reveal').forEach((e) => e.classList.add('visible'));
+  }
   const nome = $('.hero-name');
-  if (nome) {
+  if (nome && !live) {
     const cursor = document.createElement('span');
     cursor.className = 'cursor';
     nome.appendChild(cursor);
@@ -370,7 +448,7 @@ function obsCorpo(itens) {
     .join('');
 }
 
-export function renderServicos(d) {
+export function renderServicos(d, { live = false } = {}) {
   const h = d.hero || {};
   put(
     '#sv-hero',
@@ -435,4 +513,8 @@ export function renderServicos(d) {
 
   put('#sv-footer', rodapeHTML(d.rodape));
   setupReveal('.reveal-card');
+  if (live) {
+    document.body.classList.add('is-live');
+    document.querySelectorAll('.reveal-card').forEach((e) => e.classList.add('visible'));
+  }
 }
