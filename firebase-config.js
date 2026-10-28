@@ -1,0 +1,26 @@
+// ============================================================
+//  CONFIGURAÇÃO DO PAINEL — preencha UMA vez e envie ao GitHub
+//  Passo a passo completo: veja o arquivo CONFIGURAR-PAINEL.md
+// ============================================================
+
+// 1) Cole aqui os dados do seu app web no Firebase
+//    (Console do Firebase > Configurações do projeto > Seus apps > Configuração do SDK)
+//    Essas chaves podem ficar públicas: quem protege os dados são as regras do Firestore.
+export const FIREBASE_CONFIG = {
+  apiKey: "COLE_AQUI",
+  authDomain: "COLE_AQUI.firebaseapp.com",
+  projectId: "COLE_AQUI",
+  storageBucket: "COLE_AQUI.appspot.com",
+  messagingSenderId: "COLE_AQUI",
+  appId: "COLE_AQUI"
+};
+
+// 2) Cloudinary (já preenchido com os seus dados)
+export const CLOUDINARY = {
+  cloudName: "dcvhqnr1c",
+  uploadPreset: "meu-portfolio"
+};
+
+// 3) O usuário "jvdev2026" entra no Firebase como jvdev2026@jvdev.app
+//    (é só um nome interno; esse e-mail não precisa existir de verdade).
+export const ADMIN_EMAIL_DOMAIN = "jvdev.app";

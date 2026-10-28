@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="theme-color" content="#060d18"/>
+<title>Painel — JV.DEV</title>
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/dcvhqnr1c/image/upload/v1779109025/favicon_atailm.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<section id="login" class="login">
+  <form id="loginForm" class="login-card" autocomplete="on" novalidate>
+    <div class="login-logo">JV<span>.</span>DEV</div>
+    <h1>Painel do portfólio</h1>
+    <p class="login-sub">Entre para editar textos, projetos, serviços e formas de contato.</p>
+
+    <label class="lg-field">
+      <input id="user" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder=" " required/>
+      <span>Usuário</span>
+    </label>
+    <label class="lg-field">
+      <input id="pass" name="password" type="password" autocomplete="current-password" placeholder=" " required/>
+      <span>Senha</span>
+      <button type="button" id="eye" class="eye" aria-label="Mostrar ou ocultar a senha" aria-pressed="false">👁</button>
+    </label>
+
+    <p id="loginMsg" class="login-msg" role="alert"></p>
+    <button id="loginBtn" class="btn-main" type="submit"><span>Entrar</span><i class="spin" aria-hidden="true"></i></button>
+    <p class="login-foot">Acesso restrito ao dono do site.</p>
+  </form>
+
+  <div id="setup" class="login-card setup" hidden>
+    <div class="login-logo">JV<span>.</span>DEV</div>
+    <h1>Falta conectar o banco</h1>
+    <p class="login-sub">O painel precisa do seu projeto do Firebase para guardar as edições.</p>
+    <ol>
+      <li>Abra o arquivo <code>CONFIGURAR-PAINEL.md</code> e siga o passo a passo.</li>
+      <li>Cole os dados do Firebase em <code>firebase-config.js</code>.</li>
+      <li>Envie para o GitHub e recarregue esta página.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ PAINEL ============ -->
+<div id="app" class="app" hidden>
+  <div id="scrim" class="scrim"></div>
+
+  <aside id="side" class="side">
+    <div class="side-brand">JV<span>.</span>DEV <small>painel</small></div>
+    <nav id="nav" class="nav" aria-label="Páginas do painel"></nav>
+    <div class="side-foot">
+      <a class="side-link" href="index.html" target="_blank" rel="noopener">↗ Ver portfólio</a>
+      <a class="side-link" href="servicos.html" target="_blank" rel="noopener">↗ Ver serviços</a>
+      <button id="logoutBtn" type="button" class="side-link out">⏻ Sair</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="top">
+      <button id="menuBtn" class="menu-btn" type="button" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+      <div class="top-title">
+        <h2 id="pageTitle">Início</h2>
+        <p id="pageSub"></p>
+      </div>
+      <div class="top-actions">
+        <span id="dirtyPill" class="dirty-pill"><i></i>Alterações não salvas</span>
+        <button id="saveBtn" class="btn-save" type="button" disabled>
+          <span class="s-idle">Salvar e publicar</span>
+          <span class="s-load"><i class="spin"></i>Salvando</span>
+          <span class="s-done">✓ Publicado</span>
+        </button>
+      </div>
+    </header>
+
+    <p id="banner" class="banner" hidden></p>
+    <div id="view" class="view"></div>
+    <p class="foot-tip">Dica: <kbd>Ctrl</kbd> + <kbd>S</kbd> salva e publica.</p>
+  </main>
+</div>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+
+<script type="module" src="admin.js"></script>
+</body>
+</html>

@@ -661,6 +661,15 @@
     .service-icon-name { gap: 10px; }
     .service-name { font-size: 16px; }
   }
+
+  /* ================= v2 — cor rosa + destaque em negrito nas observações ================= */
+  .service-card.rose::before { background: linear-gradient(to right, #fb7185, transparent); }
+  .service-card.rose::after  { background: linear-gradient(135deg, rgba(251,113,133,0.03) 0%, transparent 60%); }
+  .service-card.rose .service-type,
+  .service-card.rose .price-value { color: #fb7185; }
+  .service-card.rose .feat-dot { background: #fb7185; }
+  .obs-list strong { color: var(--accent2); font-weight: 600; }
+  .features-list strong { color: var(--text); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -674,237 +683,22 @@
 </nav>
 
 <div class="content-wrap">
-
-  <div class="hero">
-    <p class="hero-eyebrow">// serviços & valores</p>
-    <h1 class="hero-title">O que posso<br>fazer por <span class="accent">você?</span></h1>
-    <p class="hero-sub">Desenvolvo soluções web completas, modernas e responsivas. Cada projeto é entregue com foco em qualidade, prazo e resultado para o cliente.</p>
-  </div>
-
-  <div class="services-section">
-    <div class="services-grid">
-
-      <!-- Landing Page -->
-      <div class="service-card blue reveal-card">
-        <div class="service-top">
-          <div class="service-icon-name">
-            <span class="service-emoji">🌐</span>
-            <div>
-              <p class="service-type">LANDING PAGE / ONE PAGE</p>
-              <h2 class="service-name">Landing Page</h2>
-            </div>
-          </div>
-          <div class="price-badge">
-            <span class="price-from">a partir de</span>
-            <span class="price-value">R$400</span>
-          </div>
-        </div>
-        <div class="service-divider"></div>
-        <p class="includes-label">// O QUE INCLUI</p>
-        <ul class="features-list">
-          <li><span class="feat-dot"></span>Vitrine/cardápio com galeria de produtos e filtros por categoria</li>
-          <li><span class="feat-dot"></span>Modal de detalhes com carrossel de fotos e swipe mobile</li>
-          <li><span class="feat-dot"></span>Integração com WhatsApp e Instagram</li>
-          <li><span class="feat-dot"></span>Menu hambúrguer responsivo para mobile</li>
-        </ul>
-        <div class="addons-block">
-          <p class="addons-label">// ADICIONAIS</p>
-          <div class="addons-row">
-            <span class="addon-pill">+ Painel administrativo · R$100</span>
-            <span class="addon-pill">+ Instalável como app · R$100</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Site Institucional -->
-      <div class="service-card purple reveal-card">
-        <div class="service-top">
-          <div class="service-icon-name">
-            <span class="service-emoji">🏢</span>
-            <div>
-              <p class="service-type">SITE INSTITUCIONAL</p>
-              <h2 class="service-name">Site Institucional</h2>
-            </div>
-          </div>
-          <div class="price-badge">
-            <span class="price-from">a partir de</span>
-            <span class="price-value">R$600</span>
-          </div>
-        </div>
-        <div class="service-divider"></div>
-        <p class="includes-label">// O QUE INCLUI</p>
-        <ul class="features-list">
-          <li><span class="feat-dot"></span>Páginas: sobre, serviços e contato</li>
-          <li><span class="feat-dot"></span>Formulário de contato integrado</li>
-          <li><span class="feat-dot"></span>Design responsivo e moderno</li>
-          <li><span class="feat-dot"></span>Integração com WhatsApp</li>
-        </ul>
-        <div class="addons-block">
-          <p class="addons-label">// ADICIONAIS</p>
-          <div class="addons-row">
-            <span class="addon-pill">+ Painel administrativo · R$100</span>
-            <span class="addon-pill">+ Instalável como app · R$100</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- E-commerce -->
-      <div class="service-card green reveal-card">
-        <div class="service-top">
-          <div class="service-icon-name">
-            <span class="service-emoji">🛒</span>
-            <div>
-              <p class="service-type">E-COMMERCE</p>
-              <h2 class="service-name">E-commerce</h2>
-            </div>
-          </div>
-          <div class="price-badge">
-            <span class="price-from">a partir de</span>
-            <span class="price-value">R$900</span>
-          </div>
-        </div>
-        <div class="service-divider"></div>
-        <p class="includes-label">// O QUE INCLUI</p>
-        <ul class="features-list">
-          <li><span class="feat-dot"></span>Catálogo de produtos com categorias</li>
-          <li><span class="feat-dot"></span>Modal de login para o cliente ao acessar o site</li>
-          <li><span class="feat-dot"></span>Painel admin para gerenciar produtos</li>
-          <li><span class="feat-dot"></span>Integração com o pagamento</li>
-          <li><span class="feat-dot"></span>Design responsivo e otimizado</li>
-        </ul>
-        <div class="addons-block">
-          <p class="addons-label">// ADICIONAIS</p>
-          <div class="addons-row">
-            <span class="addon-pill">+ Integração com WhatsApp · R$100</span>
-            <span class="addon-pill">+ Instalável como app · R$100</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- PWA -->
-      <div class="service-card amber reveal-card">
-        <div class="service-top">
-          <div class="service-icon-name">
-            <span class="service-emoji">📱</span>
-            <div>
-              <p class="service-type">PROGRESSIVE WEB APP</p>
-              <h2 class="service-name">PWA</h2>
-            </div>
-          </div>
-          <div class="price-badge">
-            <span class="price-from">a partir de</span>
-            <span class="price-value">R$1.200</span>
-          </div>
-        </div>
-        <div class="service-divider"></div>
-        <p class="includes-label">// O QUE INCLUI</p>
-        <ul class="features-list">
-          <li><span class="feat-dot"></span>Instalável no celular como app incluído</li>
-          <li><span class="feat-dot"></span>Menu hambúrguer responsivo para mobile</li>
-          <li><span class="feat-dot"></span>Notificações Push</li>
-          <li><span class="feat-dot"></span>Integração com WhatsApp e Instagram</li>
-          <li><span class="feat-dot"></span>Painel administrativo incluído</li>
-          <li><span class="feat-dot"></span>Carregamento otimizado com cache</li>
-          <li><span class="feat-dot"></span>Multiplataforma — um único código para tudo</li>
-        </ul>
-        <div class="addons-block">
-          <p class="addons-label">// ADICIONAIS</p>
-          <div class="addons-row">
-            <span class="addon-pill">+ Integração com bot do Telegram · R$100</span>
-            <span class="addon-pill">+ Modal de login para o cliente · R$100</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- OBSERVAÇÕES -->
-  <div class="obs-section">
-    <div class="obs-inner reveal-card">
-      <p class="obs-eyebrow">// OBSERVAÇÕES IMPORTANTES</p>
-
-      <div class="obs-grid">
-
-        <div class="obs-block">
-          <div class="obs-title"><span class="obs-icon">✅</span> Garantia</div>
-          <div class="obs-group">
-            <p class="obs-group-label">15 dias de garantia:</p>
-            <ul class="obs-list">
-              <li>Landing Page / One Page</li>
-              <li>Site Institucional</li>
-            </ul>
-          </div>
-          <div class="obs-group">
-            <p class="obs-group-label">30 dias de garantia:</p>
-            <ul class="obs-list">
-              <li>E-commerce</li>
-              <li>Progressive Web App (PWA)</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="obs-block">
-          <div class="obs-title"><span class="obs-icon">✅</span> Domínio grátis incluso</div>
-          <ul class="obs-list">
-            <li>O domínio grátis se baseia no seu site sendo hospedado no Vercel, com endereço no formato "seusite.vercel.app".</li>
-            <li>Já está incluso nos valores informados acima.</li>
-          </ul>
-        </div>
-
-        <div class="obs-block">
-          <div class="obs-title"><span class="obs-icon">✅</span> Domínio próprio (.com.br, .com, .online)</div>
-          <ul class="obs-list">
-            <li>Fica de responsabilidade do cliente pagar o próprio domínio. Eu realizo a hospedagem do site no domínio que você criou.</li>
-            <li>Sites recomendados: <span style="color:var(--accent2)">Hostgator</span> e <span style="color:var(--accent2)">Hostinger</span>.</li>
-            <li>A combinar via WhatsApp caso queira configurar seu domínio próprio.</li>
-          </ul>
-        </div>
-
-        <div class="obs-block">
-          <div class="obs-title"><span class="obs-icon">⚙️</span> Suporte</div>
-          <ul class="obs-list">
-            <li>Suporte por 1 ano: <span style="color:var(--accent3)">a combinar via WhatsApp.</span></li>
-          </ul>
-        </div>
-
-      </div>
-
-      <div class="obs-footer-msg">
-        <p>Para mais dúvidas, favor me chamar no <a href="https://wa.me/5522999226298" target="_blank">WhatsApp</a> 💬</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-section">
-    <div class="cta-inner reveal-card">
-      <h2 class="cta-title">Pronto para ter<br>seu site no ar? <span class="accent">🚀</span></h2>
-      <p class="cta-sub">Entre em contato e vamos conversar sobre o seu projeto. Orçamento gratuito e sem compromisso!</p>
-      <div class="cta-buttons">
-        <a href="https://wa.me/5522999226298" target="_blank" class="btn-primary">💬 Falar no WhatsApp</a>
-        <a href="index.html#contato" class="btn-secondary">Ver formas de contato</a>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    <span class="footer-text">© 2026 João Victor Chagas Medeiros</span>
-    <span class="footer-text">Desenvolvido com 🩵 por mim mesmo</span>
-  </footer>
-
+  <div class="hero" id="sv-hero"></div>
+  <div class="services-section" id="sv-services"></div>
+  <div class="obs-section" id="sv-obs"></div>
+  <div class="cta-section" id="sv-cta"></div>
+  <footer id="sv-footer"></footer>
 </div>
 
-<script>
-  const cards = document.querySelectorAll('.reveal-card');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 100);
-      }
-    });
-  }, { threshold: 0.1 });
-  cards.forEach(c => obs.observe(c));
+<script type="module">
+import { DEFAULT_SERVICOS } from './content-default.js';
+import { renderServicos } from './render.js';
+import { bootPage } from './site.js';
+
+bootPage({ id: 'servicos', defaults: DEFAULT_SERVICOS, render: renderServicos }).catch((e) => {
+  console.error(e);
+  renderServicos(DEFAULT_SERVICOS);
+});
 </script>
 </body>
 </html>
